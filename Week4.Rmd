@@ -1,0 +1,51 @@
+---
+title: "Week4"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-09-25"
+---
+
+```{r}
+install.packages("forecast", repos = "https://cloud.r-project.org")
+library(forecast)
+
+library(readxl)
+statistic_id272120_teslas_revenue_2008_2022 <- read_excel("/Users/jasperyeh/Downloads/statistic_id272120_teslas_revenue_2008_2022.xlsx")
+
+mean_forecast <- meanf(statistic_id272120_teslas_revenue_2008_2022$Revenue)
+plot(mean_forecast)
+mean_forecast <- meanf(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
+plot(mean_forecast)
+
+naive_forecast <- naive(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
+plot(naive_forecast)
+
+rwf_forecast <- rwf(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
+plot(rwf_forecast)
+rwf_forecast <- rwf(statistic_id272120_teslas_revenue_2008_2022$Revenue,5, drift = TRUE)
+plot(rwf_forecast)
+
+snaive_forecast <- snaive(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
+
+MA5_forecast <- ma(statistic_id272120_teslas_revenue_2008_2022$Revenue,order = 5)
+MA9_forecast <- ma(statistic_id272120_teslas_revenue_2008_2022$Revenue,order = 9)
+
+plot(mean_forecast)
+lines(naive_forecast$mean,col="red")
+lines(rwf_forecast$mean,col="green")
+lines(snaive_forecast$mean,col="black")
+lines(MA5_forecast,col="Pink")
+lines(MA9_forecast,col="Blue")
+
+attributes(naive_forecast)
+
+ets_forecast <- ets(statistic_id272120_teslas_revenue_2008_2022$Revenue)
+plot(ets_forecast)
+
+attributes(ets_forecast)
+ets_forecast$mse
+
+
+```
+
