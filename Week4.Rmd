@@ -17,19 +17,23 @@ mean_forecast <- meanf(statistic_id272120_teslas_revenue_2008_2022$Revenue)
 plot(mean_forecast)
 mean_forecast <- meanf(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
 plot(mean_forecast)
+#This plot shows the forecast for the next five periods using the mean revenue from historic data.
 
 naive_forecast <- naive(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
 plot(naive_forecast)
+#The naive forecast is using the last period's revenue numbers to forecast what the revnue numbers will be for the next five periods.
 
 rwf_forecast <- rwf(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
 plot(rwf_forecast)
 rwf_forecast <- rwf(statistic_id272120_teslas_revenue_2008_2022$Revenue,5, drift = TRUE)
 plot(rwf_forecast)
+#With the randon walk forecast it forecasts the revenue based on the general direction and movement from historical revenue numbers.
 
 snaive_forecast <- snaive(statistic_id272120_teslas_revenue_2008_2022$Revenue,5)
-
 MA5_forecast <- ma(statistic_id272120_teslas_revenue_2008_2022$Revenue,order = 5)
+#This forecast model uses the moving average model over a 5 year period to forecast future revenue numbers.
 MA9_forecast <- ma(statistic_id272120_teslas_revenue_2008_2022$Revenue,order = 9)
+#This moving average model uses 9 periods instead of a 5 period moving average from the previous forecasting model, taking more historical data into account.
 
 plot(mean_forecast)
 lines(naive_forecast$mean,col="red")
@@ -37,6 +41,7 @@ lines(rwf_forecast$mean,col="green")
 lines(snaive_forecast$mean,col="black")
 lines(MA5_forecast,col="Pink")
 lines(MA9_forecast,col="Blue")
+#The random walk forecast is best as it utilizes not the mean, but the general movement of historical data. Which should be a much more accurate depiction of what the revenue numbers should be in future periods rather than simply taking the mean or latest period numbers from the historical data.
 
 attributes(naive_forecast)
 
@@ -46,6 +51,13 @@ plot(ets_forecast)
 attributes(ets_forecast)
 ets_forecast$mse
 
+mean_forecastets <- ets(mean_forecast)
+mean_forecastets$mse
+MA5_forecastets <- ets(MA5_forecast)
+MA5_forecastets$mse
+MA9_forecastets <- ets(MA9_forecast)
+MA9_forecastets$mse
+#According to the mse numbers ETS forecast is the most accurate with the lowest number of errors.
 
 ```
 
